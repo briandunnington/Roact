@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="Legal" extends="Group">
+    <script type="text/brightscript" uri="pkg:/components/Legal.brs"/>
+    <script type="text/brightscript" uri="pkg:/source/Actions.brs"/>
+    <script type="text/brightscript" uri="pkg:/source/Reducers.brs"/>
+    <script type="text/brightscript" uri="pkg:/source/Redoku.brs"/>
+    <script type="text/brightscript" uri="pkg:/source/Promise.brs"/>
+    <script type="text/brightscript" uri="pkg:/source/Analytics.brs"/>
+
+    <interface>
+    </interface>
+
+    <children>
+        <Rectangle width="1920" height="1080" color="0x000000">
+            <Poster id="back" width="76" height="76" translation="[50,50]" uri="pkg:/locale/default/images/back-arrow-hover.png" />
+            <Label id="title" translation="[256,55]"/>
+            <Group id="container" translation="[256,211]">
+                <!-- <ScrollableText> element will be injected here -->
+            </Group>
+        </Rectangle>
+    </children>
+</component>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="Player" extends="Video">
+    <script type="text/brightscript" uri="pkg:/components/Player.brs"/>
+    <script type="text/brightscript" uri="pkg:/source/Actions.brs"/>
+    <script type="text/brightscript" uri="pkg:/source/Reducers.brs"/>
+    <script type="text/brightscript" uri="pkg:/source/Redoku.brs"/>
+    <script type="text/brightscript" uri="pkg:/source/Promise.brs"/>
+    <script type="text/brightscript" uri="pkg:/source/Analytics.brs"/>
+
+    <interface>
+        <field id="atmosSoundbarText" type="string" alias="dolbyText.text"/>
+    </interface>
+
+    <children>
+        <Group>
+            <Rectangle id="meta" width="1920" height="840" color="0x00000088" visible="false">
+                <Label id="title" translation="[196,80]"/>
+                <Label id="desc" translation="[196,152]" width="960" wrap="true" maxLines="6" ellipsizeOnBoundary="true" ellipsisText=" "/>
+            </Rectangle>
+            <Rectangle id="errorMessage" width="1920" height="540" color="0x00000088" visible="true" translation="[0,270]">
+                <Label id="errorText" translation="[480,80]" text="Content could not be loaded" width="960" horizAlign="center" wrap="true" numLines="2" />
+            </Rectangle>
+            <Rectangle id="dolbyMessage" width="520" height="200" color="0x333333" opacity="0.6" translation="[700,800]" visible="false">
+                <Label id="dolbyText" translation="[20,20]" width="480" text="In order to fully experience Dolby Atmos, please connect Dolby Atmos receiver or sound bar." horizAlign="center" wrap="true" maxLines="8" />
+            </Rectangle>
+        </Group>
+    </children>
+</component>

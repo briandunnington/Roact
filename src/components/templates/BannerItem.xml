@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="BannerItem" extends="Group">
+    <script type="text/brightscript" uri="pkg:/components/templates/BannerItem.brs"/>
+
+    <interface>
+        <field id="itemContent" type="node"/>
+        <field id="width" type="float" alias="rect.width"/>
+        <field id="height" type="float" alias="rect.height"/>
+        <field id="rowHasFocus" type="boolean"/>
+    </interface>
+
+    <children>
+        <Rectangle id="rect" color="0x1e2426">
+            <Label id="title" translation="[60,40]" color="0xebebeb" numlines="1" width="1100"/>
+            <Label id="subtitle" translation="[60,110]" color="0xebebeb" numlines="1" width="1100"/>
+            <Label id="desc" translation="[60,180]" color="0xbebebe" numLines="3" width="1100" wrap="true" lineSpacing="8.0"/>
+            <Rectangle id="buttonContainer" translation="[1250,50]" color="0x3d484d" width="400" height="60">
+                <Label id="button" translation="[55,13]" color="0xf8fafb" horizAlign="center" width="290"/>
+            </Rectangle>
+        </Rectangle>
+    </children>
+</component>

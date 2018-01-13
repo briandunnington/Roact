@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="WhereToFind" extends="Group">
+    <script type="text/brightscript" uri="pkg:/components/WhereToFind.brs"/>
+    <script type="text/brightscript" uri="pkg:/source/Actions.brs"/>
+    <script type="text/brightscript" uri="pkg:/source/Reducers.brs"/>
+    <script type="text/brightscript" uri="pkg:/source/Redoku.brs"/>
+    <script type="text/brightscript" uri="pkg:/source/Promise.brs"/>
+    <script type="text/brightscript" uri="pkg:/source/Analytics.brs"/>
+
+    <interface>
+        <field id="backButtonHasFocus" type="boolean"/>
+    </interface>
+
+    <children>
+        <Rectangle width="1920" height="1080" color="0x000000">
+            <Poster id="back" width="76" height="76" translation="[50,50]" uri="pkg:/locale/default/images/back-arrow.png" />
+            <Label id="title" translation="[175,55]"/>
+            <Label id="subtitle" translation="[175,133]"/>
+            <RowList id="rowlist" translation="[90,330]" itemComponentName="ContentProvider" itemSize="[1920,840]" numRows="1" rowItemSize="[[537,465]]" rowItemSpacing="[[45,0]]" focusBitmapUri="pkg://keyboard_focus.9.png" rowFocusAnimationStyle="fixedFocusWrap" drawFocusFeedback="false" drawFocusFeedbackOnTop="true" />
+        </Rectangle>
+    </children>
+</component>

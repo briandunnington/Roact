@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="ContentProvider" extends="Group">
+    <script type="text/brightscript" uri="pkg:/components/templates/ContentProvider.brs"/>
+
+    <interface>
+        <field id="itemContent" type="node"/>
+        <field id="width" type="float" alias="poster.width"/>
+        <field id="rowHasFocus" type="boolean"/>
+        <field id="focusPercent" type="float"/>
+    </interface>
+
+    <children>
+        <Poster id="poster" translation="[0,40]"/>
+        <Poster id="border" uri="pkg:/locale/default/images/rectangle.png" width="543" height="471" />
+        <Label id="desc" translation="[38,240]" wrap="true" numLines="4" />
+    </children>
+</component>
