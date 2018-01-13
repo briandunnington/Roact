@@ -80,6 +80,20 @@ sub showHomeScreen(args as dynamic)
     '(examples *might* include reading manifest values or device info. try *not* to do network calls or heavy processing)
     screen.show()
 
+'     GetGlobalAA().apple = function(key, press)
+' ?"APPLE"
+' return false
+'     end function
+
+'     ?GetGlobalAA()
+
+    x = h(App, {prop1: "prop one"}, [
+            h("Rectangle", {id: "rect", color: "0xff0000", width: 600, height: 400}, [
+                h(C1, {proppy: "proppy"})
+            ])
+        ])
+    renderSGOM(scene, x)
+
     'everything else can be done after the initial scene is shown.
 
 

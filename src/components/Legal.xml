@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <component name="Legal" extends="Group">
     <script type="text/brightscript" uri="pkg:/components/Legal.brs"/>
-    <script type="text/brightscript" uri="pkg:/source/Actions.brs"/>
-    <script type="text/brightscript" uri="pkg:/source/Reducers.brs"/>
-    <script type="text/brightscript" uri="pkg:/source/Redoku.brs"/>
-    <script type="text/brightscript" uri="pkg:/source/Promise.brs"/>
-    <script type="text/brightscript" uri="pkg:/source/Analytics.brs"/>
 
     <interface>
     </interface>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="RoactComponent" extends="Group">
+    <script type="text/brightscript" uri="pkg:/components/RoactComponent.brs"/>
+
+    <interface>
+        <field id="setProps" type="assocarray" alwaysNotify="true"/>
+    </interface>
+
+    <children>
+    </children>
+</component>
