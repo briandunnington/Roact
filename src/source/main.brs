@@ -87,11 +87,12 @@ sub showHomeScreen(args as dynamic)
 
 '     ?GetGlobalAA()
 
-    x = h(App, {prop1: "prop one"}, [
-            h("Rectangle", {id: "rect", color: "0xff0000", width: 600, height: 400}, [
-                h(C1, {proppy: "proppy"})
-            ])
-        ])
+    ' x = h("App", {prop1: "prop one"}, [
+    '         h("Rectangle", {id: "rect", color: "0xff0000", width: 600, height: 400}, [
+    '             h(C1, {proppy: "proppy"})
+    '         ])
+    '     ])
+    x = h("App", {id: "app", labelText: "INITIAL ROACT TEXT"})
     renderSGOM(scene, x)
 
     'everything else can be done after the initial scene is shown.

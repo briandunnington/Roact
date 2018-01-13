@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <component name="RoactComponent" extends="Group">
     <script type="text/brightscript" uri="pkg:/components/RoactComponent.brs"/>
+    <script type="text/brightscript" uri="pkg:/source/Roact.brs"/>
 
     <interface>
-        <field id="setProps" type="assocarray" alwaysNotify="true"/>
+        <field id="roact" type="boolean" value="true"/>
+        <field id="props" type="assocarray"/>
+        <field id="children" type="array"/>
+        <field id="setProps" type="assocarray" alwaysNotify="true" onChange="setPropsChanged"/>
+        <function name="componentDidMount"/>
+        <function name="conditionalRender"/>
     </interface>
 
     <children>

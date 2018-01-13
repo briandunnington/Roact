@@ -12,8 +12,8 @@ function onKeyEvent(key, press)
 ?"asdfasdf"
     if press
 
-    x = m.top.findNode("xyz").getParent().getParent()
-    ?x
+    x = m.top.findNode("app")
+    '?x
     x.setFocus(true)
 
         if key = "down"

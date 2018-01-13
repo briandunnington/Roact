@@ -1,61 +1,65 @@
-function h(elementTypeOrComponent, props = invalid, children = invalid)
-    elementType = invalid
-    component = invalid
-    if type(elementTypeOrComponent) = "Function"
-        component = elementTypeOrComponent
-        elementType = component().type
-    else
-        elementType = elementTypeOrComponent
-    end if
+function h(elementType, props = invalid, children = invalid)
     if props = invalid then props = {}
     if children = invalid then children = []
     return {
         type: elementType,
-        component: component,
         props: props,
         children: children
     }
 end function
 
 function createElement(vNode)
-    if vNode.component <> invalid
-?"FROM COMPONENT"
-        component = vNode.component()
-        id = component.type + Str(Rnd(0))
-        m[id] = component
-        component.props = vNode.props
-        component.children = vNode.children
-        vNode = component.render()
-        component.oldVNode = vNode
-        el = CreateObject("roSGNode", "RoactComponent")' component.type)
-        el.id = id
-        el.observeField("setProps", m.port)
-        el.appendChild(createElement(vNode))
-        'el.getChild(0).setFocus(true)
-        return el
+    if vNode = invalid then return invalid
+
+    if m.mounting = invalid then m.mounting = []
+
+    el = CreateObject("roSGNode", vNode.type)
+    if el.hasField("roact")
+        m.mounting.push(el)
+        if vNode.props.id <> invalid then el.id = vNode.props.id
+        el.props = vNode.props
+        el.children = vNode.children
+        child = createElement(el.callFunc("conditionalRender", invalid))
+        if child <> invalid then el.appendChild(child)
     else
-?"CREATED:", vNode.type
-        el = CreateObject("roSGNode", vNode.type)
         el.setFields(vNode.props)
         for i=0 to vNode.children.count() - 1
-            el.appendChild(createElement(vNode.children[i]))
+            child = createElement(vNode.children[i])
+            if child <> invalid then el.appendChild(child)
         end for
-        return el
     end if
+    return el
 end function
+
+sub fireComponentDidMount()
+    if m.mounting <> invalid
+        for i=0 to m.mounting.count() -1
+            el = m.mounting[i]
+?"@@@@@@@@@@@@@@@@", el.id, el.roact
+            el.callFunc("componentDidMount", invalid)
+        end for
+    end if
+    m.mounting = invalid
+end sub
 
 sub updateElement(parent, oldVNode, newVNode, index = 0)
     if oldVNode = invalid                       '1. Node did not previously exist
 ?"1111111111111"
-        parent.appendChild(createElement(newVNode))
+        child = createElement(newVNode)
+        if child <> invalid
+            parent.appendChild(child)
+            fireComponentDidMount()
+        end if
     else if newVNode = invalid                  '2. Node no longer exists
 ?"2222222222222"
         parent.removeChildIndex(index)
     else if newVNode.type <> oldVNode.type      '3. Node type changed
-        parent.replaceChild(createElement(newVNode), index)
-'TODO: component to component comparison
-'ALSO: update component.children
 ?"3333333333333"
+        child = createElement(newVNode)
+        if child <> invalid
+            parent.replaceChild(child, index)
+            fireComponentDidMount()
+        end if
     else                                        '4. Node is the same - compare children
 ?"4444444444444", newVNode.type
         child = parent.getChild(index)
