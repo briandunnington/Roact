@@ -93,7 +93,7 @@ sub showHomeScreen(args as dynamic)
     '         ])
     '     ])
     x = h("App", {id: "app", labelText: "INITIAL ROACT TEXT"})
-    renderSGOM(scene, x)
+    RoactRenderScene(scene, x)
 
     'everything else can be done after the initial scene is shown.
 

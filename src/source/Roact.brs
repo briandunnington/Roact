@@ -8,83 +8,83 @@ function h(elementType, props = invalid, children = invalid)
     }
 end function
 
-function createElement(vNode)
+function RoactCreateElement(vNode)
     if vNode = invalid then return invalid
 
     if m.mounting = invalid then m.mounting = []
 
+    ?"CREATED NODE:", vNode.type
     el = CreateObject("roSGNode", vNode.type)
     if el.hasField("roact")
         m.mounting.push(el)
         if vNode.props.id <> invalid then el.id = vNode.props.id
         el.props = vNode.props
         el.children = vNode.children
-        child = createElement(el.callFunc("conditionalRender", invalid))
+        child = RoactCreateElement(el.callFunc("conditionalRender", invalid))
         if child <> invalid then el.appendChild(child)
     else
         el.setFields(vNode.props)
         for i=0 to vNode.children.count() - 1
-            child = createElement(vNode.children[i])
+            child = RoactCreateElement(vNode.children[i])
             if child <> invalid then el.appendChild(child)
         end for
     end if
     return el
 end function
 
-sub fireComponentDidMount()
+sub RoactFireComponentDidMount()
     if m.mounting <> invalid
         for i=0 to m.mounting.count() -1
             el = m.mounting[i]
-?"@@@@@@@@@@@@@@@@", el.id, el.roact
             el.callFunc("componentDidMount", invalid)
         end for
     end if
     m.mounting = invalid
 end sub
 
-sub updateElement(parent, oldVNode, newVNode, index = 0)
+sub RoactUpdateElement(parent, oldVNode, newVNode, index = 0)
     if oldVNode = invalid                       '1. Node did not previously exist
 ?"1111111111111"
-        child = createElement(newVNode)
+        child = RoactCreateElement(newVNode)
         if child <> invalid
             parent.appendChild(child)
-            fireComponentDidMount()
+            RoactFireComponentDidMount()
         end if
     else if newVNode = invalid                  '2. Node no longer exists
 ?"2222222222222"
         parent.removeChildIndex(index)
     else if newVNode.type <> oldVNode.type      '3. Node type changed
 ?"3333333333333"
-        child = createElement(newVNode)
+        child = RoactCreateElement(newVNode)
         if child <> invalid
             parent.replaceChild(child, index)
-            fireComponentDidMount()
+            RoactFireComponentDidMount()
         end if
     else                                        '4. Node is the same - compare children
 ?"4444444444444", newVNode.type
         child = parent.getChild(index)
-        updateProps(child, oldVNode.props, newVNode.props)
+        RoactUpdateProps(child, oldVNode.props, newVNode.props)
         newLength = newVNode.children.count()
         oldLength = oldVNode.children.count()
         length = newLength
         if oldLength > length then length = oldLength
         for i=0 to oldLength - 1
-            updateElement(child, oldVNode.children[i], newVNode.children[i], i)
+            RoactUpdateElement(child, oldVNode.children[i], newVNode.children[i], i)
         end for
     end if
 end sub
 
-sub updateProps(el, oldProps, newProps)
-    'el.setFields(newProps)
-    combined = {}
-    combined.append(oldProps)
-    combined.append(newProps)
-    for each prop in combined
-        updateProp(el, prop, oldProps[prop], newProps[prop])
-    end for
+sub RoactUpdateProps(el, oldProps, newProps)
+    el.setFields(newProps)
+    ' combined = {}
+    ' combined.append(oldProps)
+    ' combined.append(newProps)
+    ' for each prop in combined
+    '     RoactUpdateProp(el, prop, oldProps[prop], newProps[prop])
+    ' end for
 end sub
 
-sub updateProp(el, propName, oldValue, newValue)
+sub RoactUpdateProp(el, propName, oldValue, newValue)
     'if newValue <> oldValue
 '?"CHANGED prop:", propName, newValue, oldValue
         el.setField(propName, newValue)
@@ -93,24 +93,6 @@ sub updateProp(el, propName, oldValue, newValue)
 '    end if
 end sub
 
-sub renderSGOM(scene, vNode)
-    m.port = CreateObject("roMessagePort")
-    updateElement(scene, invalid, vNode, 0)
-
-    while(true)
-        msg = wait(10, m.port)
-        if msg <> invalid
-            msgType = type(msg)
-            if msgType = "roSGNodeEvent"
-                element = msg.getRoSGNode()
-                id = element.id
-                component = m[id]
-                component.props.append(msg.getData())
-                oldVNode = component.oldVNode
-                vNode = component.render()
-                component.oldVNode = vNode
-                updateElement(element, oldVNode, vNode, 0)
-            end if
-        end if
-    end while
+sub RoactRenderScene(scene, vNode)
+    RoactUpdateElement(scene, invalid, vNode, 0)
 end sub

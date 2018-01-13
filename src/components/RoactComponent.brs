@@ -32,5 +32,5 @@ sub setPropsChanged(msg)
 ?"PP", props
     m.top.props = props
     newVNode = render(invalid)
-    updateElement(m.top, m.oldVNode, newVNode, 0)
+    RoactUpdateElement(m.top, m.oldVNode, newVNode, 0)
 end sub
