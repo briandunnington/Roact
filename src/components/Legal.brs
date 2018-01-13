@@ -6,7 +6,7 @@ end sub
 function render(p)
 ?"render.legal", m.top.id, m.top.props.labelText
 
-    return h("Label", {text: m.top.props.labelText})
+    return h("Label", {text: m.top.props.labelText, translation: [100,100]})
 end function
 
 function onKeyEvent(key, press)

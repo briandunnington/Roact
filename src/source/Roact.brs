@@ -85,12 +85,12 @@ sub updateProps(el, oldProps, newProps)
 end sub
 
 sub updateProp(el, propName, oldValue, newValue)
-    if newValue <> oldValue
-?"CHANGED prop:", propName, newValue, oldValue
+    'if newValue <> oldValue
+'?"CHANGED prop:", propName, newValue, oldValue
         el.setField(propName, newValue)
-    else
-?"unchanged prop:", propName, oldValue
-    end if
+'    else
+'?"unchanged prop:", propName, oldValue
+'    end if
 end sub
 
 sub renderSGOM(scene, vNode)
