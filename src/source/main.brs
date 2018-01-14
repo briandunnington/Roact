@@ -80,20 +80,8 @@ sub showHomeScreen(args as dynamic)
     '(examples *might* include reading manifest values or device info. try *not* to do network calls or heavy processing)
     screen.show()
 
-'     GetGlobalAA().apple = function(key, press)
-' ?"APPLE"
-' return false
-'     end function
-
-'     ?GetGlobalAA()
-
-    ' x = h("App", {prop1: "prop one"}, [
-    '         h("Rectangle", {id: "rect", color: "0xff0000", width: 600, height: 400}, [
-    '             h(C1, {proppy: "proppy"})
-    '         ])
-    '     ])
-    x = h("App", {id: "app", lblText: "INITIAL ROACT TEXT"})
-    RoactRenderScene(scene, x)
+    'Render to root of the Roact tree
+    RoactRenderScene(scene, h("App", {id: "app", lblText: "INITIAL ROACT TEXT"}))
 
     'everything else can be done after the initial scene is shown.
 

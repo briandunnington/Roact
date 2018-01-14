@@ -1,5 +1,4 @@
 sub init()
-?"init init init"
     m.top.state = {}
 end sub
 

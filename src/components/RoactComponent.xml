@@ -13,7 +13,4 @@
         <function name="componentDidMount"/>
         <function name="conditionalRender"/>
     </interface>
-
-    <children>
-    </children>
 </component>
