@@ -8,6 +8,16 @@ function h(elementType, props = invalid, children = invalid)
     }
 end function
 
+'Call this from your Main() method as soon as your show your main Scene
+sub RoactRenderScene(scene, vNode)
+    RoactUpdateElement(scene, invalid, vNode, 0)
+end sub
+
+'-----------------------------------------------------------------
+'Everything below here is a 'private' function only used by Roact
+'internally. Do not call these functions directly.
+'-----------------------------------------------------------------
+
 function RoactCreateElement(vNode)
     if vNode = invalid then return invalid
 
@@ -102,8 +112,4 @@ sub RoactUpdateProp(el, propName, oldValue, newValue)
 '    else
 '?"unchanged prop:", propName, oldValue
 '    end if
-end sub
-
-sub RoactRenderScene(scene, vNode)
-    RoactUpdateElement(scene, invalid, vNode, 0)
 end sub

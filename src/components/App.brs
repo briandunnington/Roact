@@ -24,6 +24,7 @@ function render(p)
     legalProps = {}
     legalProps.append(m.top.props)
     legalProps.append(m.top.state)
+    legalProps.id = "legal"
 
     listChildren = []
     for i=0 to state.x
@@ -44,6 +45,11 @@ function onKeyEvent(key, press)
     if press and key = "down"
         x = m.top.state.x + 1
         m.top.setState = {lblText: "this was updated by a key event", x: x, legalText: x.toStr()}
+
+        if x = 3
+            m.top.findNode("legal").setFocus(true)
+?"set focus to Legal"
+        end if
     end if
 
     return true

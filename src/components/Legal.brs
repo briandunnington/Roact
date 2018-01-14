@@ -33,7 +33,7 @@ function onKeyEvent(key, press)
     if press and key = "down"
         ab = true
         if m.top.state.ab <> invalid then ab = false
-        m.top.setState = {legalText: "this was updated by a key event", ab: ab}
+        m.top.setState = {legalText: "UPDATED BY KEY PRESS", ab: ab}
     end if
 
     return true
