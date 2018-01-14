@@ -92,7 +92,7 @@ sub showHomeScreen(args as dynamic)
     '             h(C1, {proppy: "proppy"})
     '         ])
     '     ])
-    x = h("App", {id: "app", labelText: "INITIAL ROACT TEXT"})
+    x = h("App", {id: "app", lblText: "INITIAL ROACT TEXT"})
     RoactRenderScene(scene, x)
 
     'everything else can be done after the initial scene is shown.

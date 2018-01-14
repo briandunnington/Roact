@@ -6,8 +6,10 @@
     <interface>
         <field id="roact" type="boolean" value="true"/>
         <field id="props" type="assocarray"/>
+        <field id="state" type="assocarray"/>
         <field id="children" type="array"/>
-        <field id="setProps" type="assocarray" alwaysNotify="true" onChange="setPropsChanged"/>
+        <field id="lastRender" type="assocarray"/>
+        <field id="setState" type="assocarray" alwaysNotify="true" onChange="setStateChanged"/>
         <function name="componentDidMount"/>
         <function name="conditionalRender"/>
     </interface>

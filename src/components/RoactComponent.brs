@@ -1,6 +1,6 @@
 sub init()
 ?"init init init"
-    m.oldVNode = invalid
+    m.top.state = {}
 end sub
 
 sub componentDidMount(p)
@@ -8,29 +8,23 @@ sub componentDidMount(p)
 end sub
 
 function shouldComponentUpdate()
-?"should component update", m.top.id
     return true
 end function
 
 function render(p)
-?"render", m.top.id
+    ?"WARNING: render() not implemented", m.top.id
     return invalid
 end function
 
 function conditionalRender(p)
-    if shouldComponentUpdate() then m.oldVNode = render(p)
-    return m.oldVNode
+    if shouldComponentUpdate() then m.top.lastRender = render(p)
+    return m.top.lastRender
 end function
 
-
-
-sub setPropsChanged(msg)
-    changedProps = msg.getData()
-?"SETPROPS", changedProps
-    props = m.top.props
-    props.append(changedProps)
-?"PP", props
-    m.top.props = props
-    newVNode = render(invalid)
-    RoactUpdateElement(m.top, m.oldVNode, newVNode, 0)
+sub setStateChanged(msg)
+    changedState = msg.getData()
+    state = m.top.state
+    state.append(changedState)
+    m.top.state = state
+    RoactUpdateElement(m.top)
 end sub

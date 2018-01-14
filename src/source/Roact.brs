@@ -42,35 +42,45 @@ sub RoactFireComponentDidMount()
     m.mounting = invalid
 end sub
 
-sub RoactUpdateElement(parent, oldVNode, newVNode, index = 0)
+sub RoactUpdateElement(parent, oldVNode = invalid, newVNode = invalid, index = 0)
+    if parent.hasField("roact")
+        oldVNode = parent.lastRender
+        newVNode = parent.callFunc("conditionalRender", invalid)
+    end if
+
     if oldVNode = invalid                       '1. Node did not previously exist
-?"1111111111111"
         child = RoactCreateElement(newVNode)
         if child <> invalid
             parent.appendChild(child)
             RoactFireComponentDidMount()
         end if
     else if newVNode = invalid                  '2. Node no longer exists
-?"2222222222222"
         parent.removeChildIndex(index)
     else if newVNode.type <> oldVNode.type      '3. Node type changed
-?"3333333333333"
         child = RoactCreateElement(newVNode)
         if child <> invalid
             parent.replaceChild(child, index)
             RoactFireComponentDidMount()
         end if
-    else                                        '4. Node is the same - compare children
-?"4444444444444", newVNode.type
+    else
         child = parent.getChild(index)
-        RoactUpdateProps(child, oldVNode.props, newVNode.props)
-        newLength = newVNode.children.count()
-        oldLength = oldVNode.children.count()
-        length = newLength
-        if oldLength > length then length = oldLength
-        for i=0 to oldLength - 1
-            RoactUpdateElement(child, oldVNode.children[i], newVNode.children[i], i)
-        end for
+        if child.hasField("roact")
+            child.props = newVNode.props
+            child.children = newVNode.children
+            oldVNode = child.oldVNode
+            x = parent.callFunc("conditionalRender", invalid)
+            RoactUpdateElement(child)
+        else
+            child = parent.getChild(index)
+            RoactUpdateProps(child, oldVNode.props, newVNode.props)
+            newLength = newVNode.children.count()
+            oldLength = oldVNode.children.count()
+            length = newLength
+            if oldLength > length then length = oldLength
+            for i=0 to oldLength - 1
+                RoactUpdateElement(child, oldVNode.children[i], newVNode.children[i], i)
+            end for
+        end if
     end if
 end sub
 
