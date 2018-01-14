@@ -1,5 +1,5 @@
 sub init()
-    m.top.state = {}
+    'm.top.state = {}
 end sub
 
 sub componentDidMount(p)
@@ -26,4 +26,15 @@ sub setStateChanged(msg)
     state.append(changedState)
     m.top.state = state
     RoactUpdateElement(m.top)
+end sub
+
+function createHandler(functionName)
+    return {
+        node: m.top
+        func: functionName
+    }
+end function
+
+sub executeHandler(handler, args = invalid)
+    handler.node.callFunc(handler.func, args)
 end sub

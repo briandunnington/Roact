@@ -81,7 +81,7 @@ sub showHomeScreen(args as dynamic)
     screen.show()
 
     'Render to root of the Roact tree
-    RoactRenderScene(scene, h("App", {id: "app", lblText: "INITIAL ROACT TEXT"}))
+    RoactRenderScene(scene, h("Game", {id: "game"}))
 
     'everything else can be done after the initial scene is shown.
 

@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<component name="HasWatchedFirstRunVideoTask" extends="Task">
-    <interface>
-        <field id="complete" type="boolean" />
-    </interface>
-
-    <script type="text/brightscript" uri="pkg:/components/tasks/HasWatchedFirstRunVideoTask.brs"/>
-    <script type="text/brightscript" uri="pkg:/source/Storage.brs"/>
-</component>

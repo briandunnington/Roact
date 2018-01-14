@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="Square" extends="RoactComponent">
+    <script type="text/brightscript" uri="pkg:/components/Square.brs"/>
+</component>
