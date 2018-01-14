@@ -25,8 +25,16 @@ function render(p)
     legalProps.append(m.top.props)
     legalProps.append(m.top.state)
 
-    return h("Label", {id: "lbl", text: lblText}, [
-                h("Legal", legalProps)
+    listChildren = []
+    for i=0 to state.x
+        listChildren.push(h("Label", {text: "List Item #" + i.toStr(), translation: [0, i*30]}))
+    end for
+
+    return h("Group", {}, [
+                h("Label", {id: "lbl", text: lblText}, [
+                    h("Legal", legalProps)
+                ]),
+                h("List", {translation: [100,200]}, listChildren)
             ])
 end function
 

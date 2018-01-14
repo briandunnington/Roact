@@ -43,6 +43,7 @@ sub RoactFireComponentDidMount()
 end sub
 
 sub RoactUpdateElement(parent, oldVNode = invalid, newVNode = invalid, index = 0)
+    'If this is a Roact component, re-render if required
     if parent.hasField("roact")
         oldVNode = parent.lastRender
         newVNode = parent.callFunc("conditionalRender", invalid)
@@ -64,20 +65,20 @@ sub RoactUpdateElement(parent, oldVNode = invalid, newVNode = invalid, index = 0
         end if
     else
         child = parent.getChild(index)
-        if child.hasField("roact")
+        if child.hasField("roact")              '4. Node is the same type and is a Roact component
             child.props = newVNode.props
             child.children = newVNode.children
             oldVNode = child.oldVNode
             x = parent.callFunc("conditionalRender", invalid)
             RoactUpdateElement(child)
-        else
+        else                                    '5. Node is the same type and is a plain SG component
             child = parent.getChild(index)
             RoactUpdateProps(child, oldVNode.props, newVNode.props)
             newLength = newVNode.children.count()
             oldLength = oldVNode.children.count()
             length = newLength
             if oldLength > length then length = oldLength
-            for i=0 to oldLength - 1
+            for i=0 to length - 1
                 RoactUpdateElement(child, oldVNode.children[i], newVNode.children[i], i)
             end for
         end if
