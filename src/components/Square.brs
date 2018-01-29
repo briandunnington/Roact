@@ -1,5 +1,8 @@
 sub init()
     m.top.observeField("focusedChild", "focusChanged")
+    m.font = CreateObject("roSGNode", "Font")
+    m.font.uri = "pkg:/locale/default/HelveticaNeue-Medium.ttf"
+    m.font.size = 72
 end sub
 
 sub componentDidMount(p)
@@ -24,6 +27,18 @@ end sub
 function render(p)
     props = m.top.props
 
+    val = props.value
+
+    color = "0xFFFFFF"
+    if val <> invalid
+        if props.value = "X"
+            color = "0xFF0000"
+        else if props.value = "O"
+            color = "0xFFFF00"
+        end if
+        val = val + "   " + Chr(160)
+    end if
+
     return h("Button", {
         id: "button"
         minWidth: props.size
@@ -33,6 +48,10 @@ function render(p)
         iconUri: ""
         focusedIconUri: ""
         translation: props.translation
-        text: props.value
+        textFont: m.font
+        focusedTextFont: m.font
+        text: val
+        textColor: color
+        focusedTextColor: color
     })
 end function

@@ -26,7 +26,7 @@ function render(p)
     end if
 
     return h("Group", {}, [
-                h("Label", {text: status, translation: [1000,0]}),
+                h("Label", {text: status, translation: [1000,144]}),
                 renderSquare(0),
                 renderSquare(1),
                 renderSquare(2),
@@ -82,12 +82,32 @@ function calculateWinner(squares)
         b = squares[line[1]]
         c = squares[line[2]]
         if a <> invalid AND b <> invalid AND c <> invalid AND a = b AND a = c
-?"WINNER!!!!!!!!", a
             return a
         end if
     end for
+
+    isCatGame = true
+    for i=0 to squares.count() - 1
+        if squares[i] = invalid
+            isCatGame = false
+            exit for
+        end if
+    end for
+    if isCatGame
+        return "CAT GAME"
+    end if
     return invalid
 end function
+
+sub restartGame()
+    setState({
+        squares: [invalid, invalid, invalid,
+                  invalid, invalid, invalid,
+                  invalid, invalid, invalid]
+        xIsNext: true
+        winner: invalid
+    })
+end sub
 
 sub focusOn(index)
     m.top.findNode("Square" + index.toStr()).setFocus(true)
@@ -102,6 +122,8 @@ function onKeyEvent(key, press)
             if newIndex <> invalid
                 focusOn(newIndex)
             end if
+        else if key = "play"
+            restartGame()
         end if
     end if
     return true
