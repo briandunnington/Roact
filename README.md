@@ -3,8 +3,8 @@ Like React.js, but for Roku
 
 # Usage
 
-Call `RoactRenderScene()` from your main.brs
-(your scene really shouldnt do much of anything)
+Call `RoactRenderScene()` from your Scene's `init()` method
+(your scene really shouldnt do much of anything else)
 
 
 The key thing to know about this vs. normal React is:
@@ -25,11 +25,35 @@ shouldComponentUpdate - can return false to short-circuit rendering. if you do n
 
 render - must return a single virtual node (h)
 
-You can also handle the onKeyEvent() method as usual. In reaction to user input or any time you want to modify the state of a component, set the setState field with the updated fields:
+You can also handle the onKeyEvent() method as usual. In reaction to user input or any time you want to modify the state of a component, call the setState() field with the updated fields:
 
-m.top.setState = {changedProperty: newValue}
+setState({changedProperty: newValue})
 
 Just like with React, you only have to specify the state properties that changed.
+
+# Passing functions as props
+
+Components should be self-contained and not have intrinsic knowledge about their parents. However, there is often a need for an action in a child component to trigger something in the parent. In React, this is done by passing functions as part of the props that get sent to the child. Since Scene Graph components do not allow setting function fields, functions cannot be passed directly in the same way. However, there is an equivalent mechanism:
+
+In your parent component define a function field:
+
+    <interface>
+        <function name="handleSquareClick"/>
+    </interface>
+
+To pass this to a child component:
+
+    clickHandler = createHandler("handleSquareClick")
+    return h("Square", {onClick: clickHandler})
+
+To execute the function from the child component:
+
+    sub buttonClicked()
+        props = m.top.props
+        executeHandler(props.onClick, {index: props.index})
+    end sub
+
+Since the function is a normal SG node function field, it can take one arbitrary argument.
 
 
 # Lifecycle method mapping

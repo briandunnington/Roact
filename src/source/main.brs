@@ -38,41 +38,6 @@ sub showHomeScreen(args as dynamic)
     appInfo = CreateObject("roAppInfo")
     appVersion = appInfo.getVersion()
 
-    'Get any necessary device info
-    di = CreateObject("roDeviceInfo")
-    ' setting port for device info events
-    di.SetMessagePort(port)
-    ' turning on event for network connectivity
-    di.EnableLinkStatusEvent(true)
-
-    clientId = di.GetClientTrackingId()
-    country = di.getCountryCode()
-    locale = di.getCurrentLocale().replace("_", "-")
-
-    ' 'Register the initial app state
-    ' initialState = {
-    '     settings: {
-    '         proxy: proxy,
-    '         apiBaseUrl: apiBaseUrl,
-    '         apiAccessToken: apiAccessToken,
-    '         country: country,
-    '         locale: locale,
-    '         applicationId: apiApplicationId
-    '     },
-    '     data: {
-    '         noNetwork: false,
-    '         showLegal: false,
-    '         legalSection: "privacy",
-    '         showWhereToFind: false,
-    '         hasWatchedFirstRunVideo: hasWatchedFirstRunVideo
-    '     },
-    '     deeplink: {
-    '         mediaType: mediaType,
-    '         contentId: contentId
-    '     }
-    ' }
-    ' RedokuSetInitialState(initialState, screen)
-
     'Show the main scene.
     'NOTE: try to do as little work as possible before this line
     'you want to show the app as fast as possible and funnel any changes through the normal state-changed mechanism.
@@ -80,34 +45,17 @@ sub showHomeScreen(args as dynamic)
     '(examples *might* include reading manifest values or device info. try *not* to do network calls or heavy processing)
     screen.show()
 
-    'Render to root of the Roact tree
-    RoactRenderScene(scene, h("Game", {id: "game"}))
-
     'everything else can be done after the initial scene is shown.
-
 
     while(true)
         msg = wait(10, port)
         if msg <> invalid
             msgType = type(msg)
-
-            ' checking for internet connectivity
-            if msgType = "roDeviceInfoEvent"
-                if msg.isStatusMessage()
-                    msgInfo = msg.GetInfo()
-                    if msgInfo.linkStatus = false
-                        ShowNetworkError()
-                    end if
-                end if
-            end if
-            
             if msgType = "roSGScreenEvent"
                 'If the screen has been closed, shutdown and exit the app
                 if msg.isScreenClosed()
                     return
                 end if
-            else
-                ProcessAnalytics(msg, port, defaultAnalyticsValues, proxy)
             end if
         end if
     end while

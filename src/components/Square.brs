@@ -22,8 +22,6 @@ sub buttonClicked()
 end sub
 
 function render(p)
-?"render.square", m.top.id
-
     props = m.top.props
 
     return h("Button", {

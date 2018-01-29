@@ -9,7 +9,6 @@
         <field id="state" type="assocarray"/>
         <field id="children" type="array"/>
         <field id="lastRender" type="assocarray"/>
-        <field id="setState" type="assocarray" alwaysNotify="true" onChange="setStateChanged"/>
         <function name="componentDidMount"/>
         <function name="conditionalRender"/>
     </interface>

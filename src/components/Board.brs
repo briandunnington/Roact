@@ -14,8 +14,6 @@ sub componentDidMount(p)
 end sub
 
 function render(p)
-?"render.board", m.top.id
-
     state = m.top.state
 
     status = ""
@@ -45,7 +43,8 @@ function renderSquare(index)
     size = 300
     tx = (index MOD 3) * 300
     ty = (index \ 3) * 300
-    return h("Square", {id: "Square" + index.toStr(), index: index, value: m.top.state.squares[index], size: size, translation: [tx,ty], onClick: createHandler("handleSquareClick")})
+    clickHandler = createHandler("handleSquareClick")
+    return h("Square", {id: "Square" + index.toStr(), index: index, value: m.top.state.squares[index], size: size, translation: [tx,ty], onClick: clickHandler})
 end function
 
 sub handleSquareClick(args)
@@ -62,7 +61,7 @@ sub handleSquareClick(args)
     if NOT state.xIsNext then val = "O"
     squares[index] = val
     winner = calculateWinner(squares)
-    m.top.setState = {squares: squares, xIsNext: (NOT state.xIsNext), winner: winner}
+    setState({squares: squares, xIsNext: (NOT state.xIsNext), winner: winner})
 end sub
 
 function calculateWinner(squares)
@@ -97,30 +96,42 @@ end sub
 
 function onKeyEvent(key, press)
     if press
-        y = {
-            up: 0
-            right: 1
-            down: 2
-            left: 3
-        }
-        x = y[key]
-        if x <> invalid
-            n = [
-                [invalid, 1, 3, invalid],
-                [invalid, 2, 4, 0],
-                [invalid, invalid, 5, 1],
-                [0, 4, 6, invalid],
-                [1, 5, 7, 3],
-                [2, invalid, 8, 4],
-                [3, 7, invalid, invalid],
-                [4, 8, invalid, 6],
-                [5, invalid, invalid, 7]
-            ]
-            newIndex = n[m.focusIndex][x]
+        keyDirection = getKeyMap()[key]
+        if keyDirection <> invalid
+            newIndex = getDirectionMap()[m.focusIndex][keyDirection]
             if newIndex <> invalid
                 focusOn(newIndex)
             end if
         end if
     end if
     return true
+end function
+
+function getKeyMap()
+    if m.keyMap = invalid
+        m.keyMap = {
+            up: 0
+            right: 1
+            down: 2
+            left: 3
+        }
+    end if
+    return m.keyMap
+end function
+
+function getDirectionMap()
+    if m.directionMap = invalid
+        m.directionMap =[
+            [invalid, 1, 3, invalid],
+            [invalid, 2, 4, 0],
+            [invalid, invalid, 5, 1],
+            [0, 4, 6, invalid],
+            [1, 5, 7, 3],
+            [2, invalid, 8, 4],
+            [3, 7, invalid, invalid],
+            [4, 8, invalid, 6],
+            [5, invalid, invalid, 7]
+        ]
+    end if
+    return m.directionMap
 end function

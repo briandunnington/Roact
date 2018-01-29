@@ -1,9 +1,7 @@
 sub init()
-    'm.top.state = {}
 end sub
 
 sub componentDidMount(p)
-?"Component did mount", m.top.id
 end sub
 
 function shouldComponentUpdate()
@@ -20,8 +18,7 @@ function conditionalRender(p)
     return m.top.lastRender
 end function
 
-sub setStateChanged(msg)
-    changedState = msg.getData()
+sub setState(changedState)
     state = m.top.state
     state.append(changedState)
     m.top.state = state
