@@ -51,7 +51,6 @@ Temporary Items
 
 out/*.zip
 src/out
-src/manifest
 
 # RPM
 roku_modules
