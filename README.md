@@ -60,21 +60,36 @@ Since the function is a normal SG node function field, it can take one arbitrary
 
 Roact provides a subset of the full React lifecycle methods. In most cases, the methods that are provided are the same, but there are a few differences:
 
-constructor > `init()`
-componentWillMount > NOT SUPPORTED
-render > `render()`
-componentDidMount > `componentDidMount()`
-componentWillReceiveProps > NOT SUPPORTED
-shouldComponentUpdate > `shouldComponentUpdate()`
-componentWillUpdate > NOT SUPPORTED
-componentDidUpdate > NOT SUPPORTED
-componentWillUnmount > NOT SUPPORTED
-componentDidCatch > NOT SUPPORTED
+    constructor > `init()`
+    componentWillMount > NOT SUPPORTED
+    render > `render()`
+    componentDidMount > `componentDidMount()`
+    componentWillReceiveProps > NOT SUPPORTED
+    shouldComponentUpdate > `shouldComponentUpdate()`
+    componentWillUpdate > NOT SUPPORTED
+    componentDidUpdate > NOT SUPPORTED
+    componentWillUnmount > NOT SUPPORTED
+    componentDidCatch > NOT SUPPORTED
+
+# Mixing-and-matching normal SG nodes
+
+Roact lets you mix and match Roact components with normal SG components, just like you can mix and match React components and normal DOM components. Simply specify the normal component name as the `type` passed to `h()` and specify the field values as the `props`. NOTE: some normal SG components intrinsicly create their own children. Roact can handle this and allows you to specify additional Roact-style children as well, but if the SG component dynamically changes the number or order of its children, you may encounter issues.
+
+    'Button is a normal SG component that intrinsicly creates its own children
+    h("Button", {
+        text: "button text"
+        textColor: "0xff0000"
+    }, [
+        'CustomComponent can still be added as an _additional_ child to Button
+        h("CustomComponent", {
+            blink: true
+        })
+    ])
 
 # Files
 
-source/Roact.brs - contains all of the Roact runtime functions
-components/RoactComponent.xml & components/RoactComponent.brs - base class for Roact components
+    source/Roact.brs - contains all of the Roact runtime functions
+    components/RoactComponent.xml & components/RoactComponent.brs - base class for Roact components
 
 # What about JSX
 

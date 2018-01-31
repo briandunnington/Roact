@@ -2,20 +2,4 @@
 <component name="RootScene" extends="Scene">
     <script type="text/brightscript" uri="pkg:/components/RootScene.brs"/>
     <script type="text/brightscript" uri="pkg:/source/Roact.brs"/>
-
-    <!-- <children>
-        <Game>
-        <Board>
-            <Square><Button minWidth="300" maxWidth="300" height="300" showFocusFootprint="true" iconUri="" focusedIconUri="" translation="[100,100]" text=""/></Square>
-            <Square><Button minWidth="300" maxWidth="300" height="300" showFocusFootprint="true" iconUri="" focusedIconUri="" translation="[100,200]" text=""/></Square>
-            <Square><Button minWidth="300" maxWidth="300" height="300" showFocusFootprint="true" iconUri="" focusedIconUri="" translation="[100,300]" text=""/></Square>
-            <Square><Button minWidth="300" maxWidth="300" height="300" showFocusFootprint="true" iconUri="" focusedIconUri="" translation="[100,400]" text=""/></Square>
-            <Square><Button minWidth="300" maxWidth="300" height="300" showFocusFootprint="true" iconUri="" focusedIconUri="" translation="[100,500]" text=""/></Square>
-            <Square><Button minWidth="300" maxWidth="300" height="300" showFocusFootprint="true" iconUri="" focusedIconUri="" translation="[100,600]" text=""/></Square>
-            <Square><Button minWidth="300" maxWidth="300" height="300" showFocusFootprint="true" iconUri="" focusedIconUri="" translation="[100,700]" text=""/></Square>
-            <Square><Button minWidth="300" maxWidth="300" height="300" showFocusFootprint="true" iconUri="" focusedIconUri="" translation="[100,800]" text=""/></Square>
-            <Square><Button minWidth="300" maxWidth="300" height="300" showFocusFootprint="true" iconUri="" focusedIconUri="" translation="[100,900]" text=""/></Square>
-        </Board>
-        </Game>
-    </children> -->
 </component>

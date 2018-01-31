@@ -33,6 +33,9 @@ function RoactCreateElement(vNode)
         child = RoactCreateElement(vNode)
         if child <> invalid then el.appendChild(child)
     else
+        el.addFields({
+            _intrinsicChildCount: el.getChildCount()
+        })
         if vNode.props.count() > 0 then el.setFields(vNode.props)
         for i=0 to vNode.children.count() - 1
             child = RoactCreateElement(vNode.children[i])
@@ -84,13 +87,15 @@ sub RoactUpdateElement(parent, oldVNode = invalid, newVNode = invalid, index = 0
             RoactUpdateElement(child)
         else                                    '5. Node is the same type and is a plain SG component
             child = parent.getChild(index)
+            offset = 0
+            if child._intrinsicChildCount <> invalid then offset = child._intrinsicChildCount
             RoactUpdateProps(child, oldVNode.props, newVNode.props)
             newLength = newVNode.children.count()
             oldLength = oldVNode.children.count()
             length = newLength
             if oldLength > length then length = oldLength
             for i=0 to length - 1
-                RoactUpdateElement(child, oldVNode.children[i], newVNode.children[i], i)
+                RoactUpdateElement(child, oldVNode.children[i], newVNode.children[i], offset + i)
             end for
         end if
     end if
