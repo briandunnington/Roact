@@ -10,6 +10,7 @@ sub init()
 end sub
 
 sub componentDidMount(p)
+    m.focuseater = m.top.findNode("focuseater")
     focusOn(0)
 end sub
 
@@ -26,6 +27,7 @@ function render(p)
     end if
 
     return h("Group", {}, [
+                h("Button", {id: "focuseater", visible: false}),
                 h("Label", {text: status, translation: [1000,144]}),
                 renderSquare(0),
                 renderSquare(1),
@@ -61,6 +63,7 @@ sub handleSquareClick(args)
     if NOT state.xIsNext then val = "O"
     squares[index] = val
     winner = calculateWinner(squares)
+    if winner <> invalid then m.focuseater.setFocus(true)
     setState({squares: squares, xIsNext: (NOT state.xIsNext), winner: winner})
 end sub
 
@@ -107,6 +110,7 @@ sub restartGame()
         xIsNext: true
         winner: invalid
     })
+    focusOn(0)
 end sub
 
 sub focusOn(index)
@@ -117,7 +121,7 @@ end sub
 function onKeyEvent(key, press)
     if press
         keyDirection = getKeyMap()[key]
-        if keyDirection <> invalid
+        if keyDirection <> invalid AND m.top.state.winner = invalid
             newIndex = getDirectionMap()[m.focusIndex][keyDirection]
             if newIndex <> invalid
                 focusOn(newIndex)
