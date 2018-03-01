@@ -1,4 +1,5 @@
-# Roact - React for Roku
+<h1><img src="./src/assets/roact-logo2.png" width=40/> Roact - React for Roku</h1>
+
 Like React.js, but for Roku
 
 # Usage
@@ -96,4 +97,3 @@ Roact lets you mix and match Roact components with normal SG components, just li
 Since BrightScript does not have a large community of tools, there is nothing similar to Babel or other JSX transpilers. While it would theoretically be possible to write such a tool, it is outside the scope of this framework.
 
 Essentially, Roact is like [using React without JSX](https://reactjs.org/docs/react-without-jsx.html)
-
