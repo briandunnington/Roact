@@ -1,0 +1,13 @@
+title=Roact Sample App
+major_version=1
+minor_version=0
+build_version=0
+mm_icon_focus_fhd=pkg:/locale/default/images/channel-540x405.png
+mm_icon_focus_hd=pkg:/locale/default/images/channel-290x218.png
+splash_screen_hd=pkg:/locale/default/images/splash.png
+splash_screen_fhd=pkg:/locale/default/images/splash.png
+splash_color=#ff0000
+splash_min_time=0
+splash_rsg_optimization=1
+ui_resolutions=fhd
+uri_resolution_autosub=$$RES$$,SD,HD,FHD

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="AddTodo" extends="RoactComponent">
+    <script type="text/brightscript" uri="pkg:/components/AddTodo.brs"/>
+    <script type="text/brightscript" uri="pkg:/source/Redoku.brs"/>
+    <script type="text/brightscript" uri="pkg:/source/Actions.brs"/>
+</component>

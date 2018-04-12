@@ -1,3 +1,5 @@
+<h1><img src="./src/assets/roact-logo2.png" width=40/> Roact - React for Roku</h1>
+
 # Roact - React for Roku
 Like React.js, but for Roku
 
@@ -8,26 +10,23 @@ Call `RoactRenderScene()` from your Scene's `init()` method
 
 
 The key thing to know about this vs. normal React is:
-In React, there are React Components and they eventually render DOM elements.
-In Roact, the Roact Components contain the equivalent 'React Component' code *and* the equivalent DOM (SG component) code in the same file.
-
-
-
+- In React, there are React Components and they eventually render DOM elements.
+- In Roact, the Roact Components contain the equivalent 'React Component' code *and* the equivalent DOM (SG component) code in the same file.
 
 To create Roact Components:
--create SG component as normal, but extend `RoactComponent`
--dont add any children or fields via xml markup
--in your .brs file, you can implement any of these methods:
+- create SG component as normal, but extend `RoactComponent`
+- dont add any children or fields via xml markup
+- in your .brs file, you can implement any of these methods:
 
-componentDidMount - will be called after your component has been fully created (including all children) and added to the visual tree. you can use `findNode` at this point if necessary
+`componentDidMount` - will be called after your component has been fully created (including all children) and added to the visual tree. you can use `findNode` at this point if necessary
 
-shouldComponentUpdate - can return false to short-circuit rendering. if you do not implement this, it will always return true
+`shouldComponentUpdate` - can return false to short-circuit rendering. if you do not implement this, it will always return true
 
-render - must return a single virtual node (h)
+`render` - must return a single virtual node (h)
 
-You can also handle the onKeyEvent() method as usual. In reaction to user input or any time you want to modify the state of a component, call the setState() field with the updated fields:
+You can also handle the `onKeyEvent()` method as usual. In reaction to user input or any time you want to modify the state of a component, call the `setState()` field with the updated fields:
 
-setState({changedProperty: newValue})
+`setState({changedProperty: newValue})`
 
 Just like with React, you only have to specify the state properties that changed.
 
@@ -61,15 +60,11 @@ Since the function is a normal SG node function field, it can take one arbitrary
 Roact provides a subset of the full React lifecycle methods. In most cases, the methods that are provided are the same, but there are a few differences:
 
     constructor > `init()`
-    componentWillMount > NOT SUPPORTED
-    render > `render()`
     componentDidMount > `componentDidMount()`
-    componentWillReceiveProps > NOT SUPPORTED
     shouldComponentUpdate > `shouldComponentUpdate()`
-    componentWillUpdate > NOT SUPPORTED
-    componentDidUpdate > NOT SUPPORTED
-    componentWillUnmount > NOT SUPPORTED
-    componentDidCatch > NOT SUPPORTED
+    render > `render()`
+
+The other React lifecycle methods have either been deprecated by React in recent versions, or are generally not applicable to Roku development.
 
 # Mixing-and-matching normal SG nodes
 
@@ -86,14 +81,23 @@ Roact lets you mix and match Roact components with normal SG components, just li
         })
     ])
 
+# Roact + Redoku = 💖
+
+Just like Redux works great with React, [Redoku](https://github.com/briandunnington/Redoku) works great with Roact. The easiest way to use them together is to make your Roact components inherit from `ConnectedComponent` instead of `RoactComponent`. That provides two benefits:
+
+1. It provides a `mapState()` function that you can use to map Redoku global state to your component's local state (similar to `mapStateToProps` in Redux, but the global state is mapped to `state` instead of `props`). `mapState()` takes a single argument, which is a function with this signature: `function(state, prevState)` - use the incoming Redoku `state` (and `prevState`, if desired) and return an associative array that will be used to update your component's local state.
+When you use `mapState()`, it takes care of observing the Redoku state for you so you do not need to do:
+`m.global.observeField("state", "stateChanged")`
+2. Provides an optimized default implementation of `shouldComponentUpdate()` - this will cause your component to only re-render when when `mapState()` has updated your state. 
+
 # Files
 
-    source/Roact.brs - contains all of the Roact runtime functions
-    components/RoactComponent.xml & components/RoactComponent.brs - base class for Roact components
+- `source/Roact.brs` - contains all of the Roact runtime functions
+- `components/RoactComponent.xml` & `components/RoactComponent.brs` - base class for Roact components
+- `components/ConnectedComponent.xml` & `components/ConnectedComponent.brs` - base class for Redoku-aware Roact components
 
 # What about JSX
 
 Since BrightScript does not have a large community of tools, there is nothing similar to Babel or other JSX transpilers. While it would theoretically be possible to write such a tool, it is outside the scope of this framework.
 
 Essentially, Roact is like [using React without JSX](https://reactjs.org/docs/react-without-jsx.html)
-
