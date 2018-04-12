@@ -1,4 +1,4 @@
-<h1><img src="./src/assets/roact-logo2.png" width=40/> Roact - React for Roku</h1>
+<h1><img src="./assets/roact-logo2.png" width="40" style="vertical-align:middle;"/> Roact - React for Roku</h1>
 
 Like React.js, but for Roku
 
