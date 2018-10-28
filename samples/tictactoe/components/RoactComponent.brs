@@ -1,7 +1,11 @@
 sub init()
+    m.top.state = {}
 end sub
 
 sub componentDidMount(p)
+end sub
+
+sub componentDidUpdate(prevProps)
 end sub
 
 function shouldComponentUpdate()

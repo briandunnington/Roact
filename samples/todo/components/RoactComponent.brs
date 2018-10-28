@@ -5,6 +5,9 @@ end sub
 sub componentDidMount(p)
 end sub
 
+sub componentDidUpdate(prevProps)
+end sub
+
 function shouldComponentUpdate()
     return true
 end function

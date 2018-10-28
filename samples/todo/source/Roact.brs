@@ -80,11 +80,13 @@ sub RoactUpdateElement(parent, oldVNode = invalid, newVNode = invalid, index = 0
     else
         child = parent.getChild(index)
         if child.hasField("roact")              '4. Node is the same type and is a Roact component
+            prevProps = child.props
             child.setFields({
                 props: newVNode.props
                 children: newVNode.children
             })
             RoactUpdateElement(child)
+            child.callFunc("componentDidUpdate", prevProps)
         else                                    '5. Node is the same type and is a plain SG component
             child = parent.getChild(index)
             offset = 0
@@ -97,6 +99,9 @@ sub RoactUpdateElement(parent, oldVNode = invalid, newVNode = invalid, index = 0
             for i=0 to length - 1
                 RoactUpdateElement(child, oldVNode.children[i], newVNode.children[i], offset + i)
             end for
+            if newLength < oldLength
+                child.removeChildrenIndex(oldLength-newLength, newLength)
+            end if
         end if
     end if
 end sub

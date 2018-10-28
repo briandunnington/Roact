@@ -10,6 +10,7 @@
         <field id="children" type="array"/>
         <field id="lastRender" type="assocarray"/>
         <function name="componentDidMount"/>
+        <function name="componentDidUpdate"/>
         <function name="conditionalRender"/>
     </interface>
 </component>
