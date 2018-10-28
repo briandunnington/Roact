@@ -19,6 +19,8 @@ To create Roact Components:
 
 `componentDidMount` - will be called after your component has been fully created (including all children) and added to the visual tree. you can use `findNode` at this point if necessary
 
+`componentDidUpdate(prevProps)` - will be called after each render and can be used to perform side-effects related to `props` changing. Note that is is called regardless of whether the `props` actually changed or not.
+
 `shouldComponentUpdate` - can return false to short-circuit rendering. if you do not implement this, it will always return true
 
 `render` - must return a single virtual node (h)
@@ -58,10 +60,11 @@ Since the function is a normal SG node function field, it can take one arbitrary
 
 Roact provides a subset of the full React lifecycle methods. In most cases, the methods that are provided are the same, but there are a few differences:
 
-    constructor > `init()`
-    componentDidMount > `componentDidMount()`
-    shouldComponentUpdate > `shouldComponentUpdate()`
-    render > `render()`
+    constructor > init()
+    componentDidMount > componentDidMount()
+    componentDidUpdate > componentDidUpdate(prevProps)
+    shouldComponentUpdate > shouldComponentUpdate()
+    render > render()
 
 The other React lifecycle methods have either been deprecated by React in recent versions, or are generally not applicable to Roku development.
 
