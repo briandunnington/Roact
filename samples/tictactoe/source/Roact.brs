@@ -1,6 +1,6 @@
 'Call this from your Scene's init()
 sub RoactRenderScene(scene, vNode)
-    RoactUpdateElement(scene, invalid, vNode, 0)
+    RoactUpdateElement(scene, invalid, invalid, vNode, 0)
 end sub
 
 function h(elementType, props = invalid, children = invalid)
@@ -55,11 +55,13 @@ sub RoactFireComponentDidMount()
     m.mounting = invalid
 end sub
 
-sub RoactUpdateElement(parent, oldVNode = invalid, newVNode = invalid, index = 0)
+sub RoactUpdateElement(parent, prevProps, oldVNode = invalid, newVNode = invalid, index = 0)
     'If this is a Roact component, re-render if required
+    didUpdate = false
     if parent.hasField("roact")
         oldVNode = parent.lastRender
         newVNode = parent.callFunc("conditionalRender", invalid)
+        didUpdate = (prevProps <> invalid AND oldVNode.__instance <> newVNode.__instance)
     end if
 
     'Reconcile virtual nodes into actual SG components
@@ -85,8 +87,7 @@ sub RoactUpdateElement(parent, oldVNode = invalid, newVNode = invalid, index = 0
                 props: newVNode.props
                 children: newVNode.children
             })
-            RoactUpdateElement(child)
-            child.callFunc("componentDidUpdate", prevProps)
+            RoactUpdateElement(child, prevProps)
         else                                    '5. Node is the same type and is a plain SG component
             child = parent.getChild(index)
             offset = 0
@@ -97,12 +98,21 @@ sub RoactUpdateElement(parent, oldVNode = invalid, newVNode = invalid, index = 0
             length = newLength
             if oldLength > length then length = oldLength
             for i=0 to length - 1
-                RoactUpdateElement(child, oldVNode.children[i], newVNode.children[i], offset + i)
+                childPrevProps = invalid
+                if child.hasField("roact")
+                    childPrevProps = child.props
+                end if
+                RoactUpdateElement(child, childPrevProps, oldVNode.children[i], newVNode.children[i], offset + i)
             end for
             if newLength < oldLength
                 child.removeChildrenIndex(oldLength-newLength, newLength)
             end if
         end if
+    end if
+
+    'If this is a Roact component that updated, trigger componentDidUpdate
+    if didUpdate
+        parent.callFunc("componentDidUpdate", prevProps)
     end if
 end sub
 

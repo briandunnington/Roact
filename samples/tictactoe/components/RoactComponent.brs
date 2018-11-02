@@ -18,7 +18,11 @@ function render(p)
 end function
 
 function conditionalRender(p)
-    if shouldComponentUpdate() then m.top.lastRender = render(p)
+    if shouldComponentUpdate()
+        r = render(p)
+        r.__instance = strI(rnd(2147483647), 36)
+        m.top.lastRender = r
+    end if
     return m.top.lastRender
 end function
 
@@ -26,7 +30,7 @@ sub setState(changedState)
     state = m.top.state
     state.append(changedState)
     m.top.state = state
-    RoactUpdateElement(m.top)
+    RoactUpdateElement(m.top, m.top.props)
 end sub
 
 function createHandler(functionName)
