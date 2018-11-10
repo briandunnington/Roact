@@ -62,8 +62,8 @@ Roact provides a subset of the full React lifecycle methods. In most cases, the 
 
     constructor > init()
     componentDidMount > componentDidMount()
-    componentDidUpdate > componentDidUpdate(prevProps)
-    shouldComponentUpdate > shouldComponentUpdate()
+    componentDidUpdate > componentDidUpdate(prevProps, prevState)
+    shouldComponentUpdate > shouldComponentUpdate(nextProps, nextState)
     render > render()
 
 The other React lifecycle methods have either been deprecated by React in recent versions, or are generally not applicable to Roku development.

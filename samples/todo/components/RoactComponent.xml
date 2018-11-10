@@ -9,8 +9,8 @@
         <field id="state" type="assocarray"/>
         <field id="children" type="array"/>
         <field id="lastRender" type="assocarray"/>
-        <function name="componentDidMount"/>
-        <function name="componentDidUpdate"/>
-        <function name="conditionalRender"/>
+        <function name="roactComponentDidMount"/>
+        <function name="roactComponentDidUpdate"/>
+        <function name="roactConditionalRender"/>
     </interface>
 </component>

@@ -10,11 +10,11 @@ sub focusChanged()
     m.input.active = m.input.hasFocus()
 end sub
 
-sub componentDidMount(p)
+sub componentDidMount()
     m.input = m.top.findNode("input")
 end sub
 
-function render(p)
+function render()
     return h("TextEditBox", {id: "input", hintText: "add todo..."})
 end function
 

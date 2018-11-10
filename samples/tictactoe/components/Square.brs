@@ -5,7 +5,7 @@ sub init()
     m.font.size = 72
 end sub
 
-sub componentDidMount(p)
+sub componentDidMount()
     findButton()
     m.button.observeField("buttonSelected", "buttonClicked")
 end sub
@@ -24,7 +24,7 @@ sub buttonClicked()
     executeHandler(props.onClick, {index: props.index})
 end sub
 
-function render(p)
+function render()
     props = m.top.props
 
     val = props.value

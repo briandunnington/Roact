@@ -28,7 +28,7 @@ sub focusChanged()
     end if
 end sub
 
-sub componentDidMount(p)
+sub componentDidMount()
     m.list = m.top.findNode("list")
     m.list.observeField("itemSelected", "itemSelected")
 end sub
@@ -37,7 +37,7 @@ sub itemSelected()
     ToggleTodo(m.list.content.getChild(m.list.itemSelected).id)
 end sub
 
-function render(p)
+function render()
     m.isStale = false
     m.top.translation = m.top.props.translation
     state = m.top.state

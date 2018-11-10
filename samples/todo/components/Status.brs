@@ -14,11 +14,11 @@ sub init()
     end function)
 end sub
 
-sub componentDidMount(p)
+sub componentDidMount()
     m.label = m.top.findNode("lbl")
 end sub
 
-function render(p)
+function render()
     m.top.translation = m.top.props.translation
 
     status = "Showing: " + m.top.state.filter

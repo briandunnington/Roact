@@ -1,10 +1,10 @@
-sub componentDidMount(p)
+sub componentDidMount()
     m.addTodo = m.top.findNode("addTodo")
     m.todoList = m.top.findNode("todoList")
     m.addTodo.setFocus(true)
 end sub
 
-function render(p)
+function render()
     return h("Group", {translation: [64, 64]}, [
         h("AddTodo", {id: "addTodo"}),
         h("TodoList", {id: "todoList", translation: [600, 9]}),

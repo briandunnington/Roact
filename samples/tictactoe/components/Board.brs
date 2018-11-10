@@ -9,12 +9,12 @@ sub init()
     m.focusIndex = 0
 end sub
 
-sub componentDidMount(p)
+sub componentDidMount()
     m.focuseater = m.top.findNode("focuseater")
     focusOn(0)
 end sub
 
-function render(p)
+function render()
     state = m.top.state
 
     status = ""

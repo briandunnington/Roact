@@ -29,7 +29,7 @@ function RoactCreateElement(vNode)
             props: vNode.props
             children: vNode.children
         })
-        vNode = el.callFunc("conditionalRender", invalid)
+        vNode = el.callFunc("roactConditionalRender", invalid)
         child = RoactCreateElement(vNode)
         if child <> invalid then el.appendChild(child)
     else
@@ -49,47 +49,55 @@ sub RoactFireComponentDidMount()
     if m.mounting <> invalid
         for i=(m.mounting.count() - 1) to 0 step -1
             el = m.mounting[i]
-            el.callFunc("componentDidMount", invalid)
+            el.callFunc("roactComponentDidMount", invalid)
         end for
     end if
     m.mounting = invalid
 end sub
 
-sub RoactUpdateElement(parent, prevProps, oldVNode = invalid, newVNode = invalid, index = 0)
-    'If this is a Roact component, re-render if required
+sub RoactUpdateElement(node, newState = invalid, oldVNode = invalid, newVNode = invalid, index = 0)
+    prevPropsAndState = invalid
     didUpdate = false
-    if parent.hasField("roact")
-        oldVNode = parent.lastRender
-        newVNode = parent.callFunc("conditionalRender", invalid)
-        didUpdate = (prevProps <> invalid AND oldVNode.__instance <> newVNode.__instance)
+    if node.hasField("roact")
+        prevPropsAndState = {
+            props: node.props
+            state: node.state
+        }
+        newProps = node.props
+        if newVNode <> invalid then newProps = newVNode.props
+        if newState = invalid then newState = node.state
+        nextPropsAndState = {
+            props: newProps
+            state: newState
+        }
+
+        oldVNode = node.lastRender
+        newVNode = node.callFunc("roactConditionalRender", nextPropsAndState)
+        didUpdate = (oldVNode <> invalid AND oldVNode.__instance <> newVNode.__instance)
+        if NOT didUpdate then return
     end if
 
     'Reconcile virtual nodes into actual SG components
     if oldVNode = invalid                       '1. Node did not previously exist
         child = RoactCreateElement(newVNode)
         if child <> invalid
-            parent.appendChild(child)
+            node.appendChild(child)
             RoactFireComponentDidMount()
         end if
     else if newVNode = invalid                  '2. Node no longer exists
-        parent.removeChildIndex(index)
+        node.removeChildIndex(index)
     else if newVNode.type <> oldVNode.type      '3. Node type changed
         child = RoactCreateElement(newVNode)
         if child <> invalid
-            parent.replaceChild(child, index)
+            node.replaceChild(child, index)
             RoactFireComponentDidMount()
         end if
     else
-        child = parent.getChild(index)
+        child = node.getChild(index)
         if child.hasField("roact")              '4. Node is the same type and is a Roact component
-            prevProps = child.props
-            child.setFields({
-                props: newVNode.props
-                children: newVNode.children
-            })
-            RoactUpdateElement(child, prevProps)
+            RoactUpdateElement(child, invalid, invalid, newVNode)
         else                                    '5. Node is the same type and is a plain SG component
-            child = parent.getChild(index)
+            child = node.getChild(index)
             offset = 0
             if child._intrinsicChildCount <> invalid then offset = child._intrinsicChildCount
             RoactUpdateProps(child, oldVNode.props, newVNode.props)
@@ -98,11 +106,7 @@ sub RoactUpdateElement(parent, prevProps, oldVNode = invalid, newVNode = invalid
             length = newLength
             if oldLength > length then length = oldLength
             for i=0 to length - 1
-                childPrevProps = invalid
-                if child.hasField("roact")
-                    childPrevProps = child.props
-                end if
-                RoactUpdateElement(child, childPrevProps, oldVNode.children[i], newVNode.children[i], offset + i)
+                RoactUpdateElement(child, invalid, oldVNode.children[i], newVNode.children[i], offset + i)
             end for
             if newLength < oldLength
                 child.removeChildrenIndex(oldLength-newLength, newLength)
@@ -112,7 +116,7 @@ sub RoactUpdateElement(parent, prevProps, oldVNode = invalid, newVNode = invalid
 
     'If this is a Roact component that updated, trigger componentDidUpdate
     if didUpdate
-        parent.callFunc("componentDidUpdate", prevProps)
+        node.callFunc("roactComponentDidUpdate", prevPropsAndState)
     end if
 end sub
 
