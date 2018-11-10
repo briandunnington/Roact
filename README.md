@@ -19,9 +19,9 @@ To create Roact Components:
 
 `componentDidMount` - will be called after your component has been fully created (including all children) and added to the visual tree. you can use `findNode` at this point if necessary
 
-`componentDidUpdate(prevProps)` - will be called after each render and can be used to perform side-effects related to `props` changing. Note that is is called regardless of whether the `props` actually changed or not.
+`componentDidUpdate(prevProps, prevState)` - will be called after each render and can be used to perform side-effects related to `props` changing. Note that is is called regardless of whether the `props` or `state` actually changed or not.
 
-`shouldComponentUpdate` - can return false to short-circuit rendering. if you do not implement this, it will always return true
+`shouldComponentUpdate(nextProps, nextState` - can return false to short-circuit rendering. if you do not implement this, it will always return true
 
 `render` - must return a single virtual node (h)
 
